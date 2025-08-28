@@ -1,23 +1,28 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GraduationCap } from 'lucide-react';
+import { useSupabaseData } from '@/hooks/useSupabaseData';
+import { Education } from '@/types/database';
 
 const EducationSection = () => {
-  const education = [
-    {
-      degree: "Master in Data Science & Computer Engineering",
-      institution: "NUST MISIS, Moscow",
-      period: "2024 – Present",
-      description: "Advanced studies in Data Science and Computer Engineering with focus on AI and ML applications."
-    },
-    {
-      degree: "Bachelor of Science in Computer Science",
-      institution: "University of Sargodha",
-      period: "2020 – 2024",
-      gpa: "3.43/4",
-      description: "Comprehensive study of computer science fundamentals with specialization in software development."
-    }
-  ];
+  const { data: education, loading } = useSupabaseData('education');
+
+  if (loading) {
+    return (
+      <section id="education" className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="animate-pulse space-y-6">
+              <div className="h-12 bg-muted rounded w-64 mx-auto mb-12"></div>
+              {[1, 2].map((i) => (
+                <div key={i} className="h-32 bg-muted rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="education" className="py-20 bg-card">
@@ -55,21 +60,15 @@ const EducationSection = () => {
                       <div className="flex-1">
                         <CardTitle className="text-xl mb-2">{edu.degree}</CardTitle>
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-muted-foreground">
-                          <span className="font-medium">{edu.institution}</span>
+                          <span className="font-medium">{edu.university}</span>
                           <span className="hidden sm:block">•</span>
-                          <span>{edu.period}</span>
-                          {edu.gpa && (
-                            <>
-                              <span className="hidden sm:block">•</span>
-                              <span className="font-semibold text-primary">GPA: {edu.gpa}</span>
-                            </>
-                          )}
+                          <span>{edu.year}</span>
                         </div>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">{edu.description}</p>
+                    <p className="text-muted-foreground leading-relaxed">{edu.details}</p>
                   </CardContent>
                 </Card>
               </motion.div>

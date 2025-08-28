@@ -1,7 +1,27 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
+import { useSupabaseData } from '@/hooks/useSupabaseData';
+import { About } from '@/types/database';
 
 const AboutSection = () => {
+  const { data: aboutData, loading } = useSupabaseData('about');
+  const bio = aboutData[0]?.bio || "Experienced professional with a versatile skill set encompassing Data Science, Web Development, Virtual Assistance, and Event Organization. Passionate about leveraging technology to drive efficiency and innovation.";
+
+  if (loading) {
+    return (
+      <section id="about" className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="animate-pulse">
+              <div className="h-12 bg-muted rounded w-64 mx-auto mb-8"></div>
+              <div className="h-40 bg-muted rounded"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -23,9 +43,7 @@ const AboutSection = () => {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                Experienced professional with a versatile skill set encompassing Data Science, 
-                Web Development, Virtual Assistance, and Event Organization. Passionate about 
-                leveraging technology to drive efficiency and innovation.
+                {bio}
               </motion.p>
             </CardContent>
           </Card>

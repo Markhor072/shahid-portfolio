@@ -1,34 +1,28 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Briefcase } from 'lucide-react';
+import { useSupabaseData } from '@/hooks/useSupabaseData';
+import { Experience } from '@/types/database';
 
 const ExperienceSection = () => {
-  const experiences = [
-    {
-      title: "Chief Organizer",
-      company: "Evolution Pakistan",
-      period: "2023 – Present",
-      description: "Leading strategic initiatives and organizing large-scale technology events, managing teams and stakeholders to deliver impactful programs."
-    },
-    {
-      title: "Amazon Virtual Assistant",
-      company: "Smart Seller 22 Store",
-      period: "2022 – 2023",
-      description: "Provided comprehensive virtual assistance for Amazon marketplace operations, including product research, listing optimization, and customer service."
-    },
-    {
-      title: "Digital Marketing Expert",
-      company: "A2ZSMM Panel",
-      period: "2019 – 2021",
-      description: "Developed and executed digital marketing strategies, managed social media campaigns, and analyzed performance metrics to drive growth."
-    },
-    {
-      title: "Classroom Tutor",
-      company: "Scholars Academy",
-      period: "2021 – 2022",
-      description: "Delivered engaging computer science education to students, developed curriculum materials, and mentored students in programming concepts."
-    }
-  ];
+  const { data: experiences, loading } = useSupabaseData('experience');
+
+  if (loading) {
+    return (
+      <section id="experience" className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="animate-pulse space-y-6">
+              <div className="h-12 bg-muted rounded w-64 mx-auto mb-12"></div>
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-32 bg-muted rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="experience" className="py-20 bg-background">
@@ -64,11 +58,11 @@ const ExperienceSection = () => {
                         <Briefcase className="h-6 w-6" />
                       </motion.div>
                       <div className="flex-1">
-                        <CardTitle className="text-xl mb-1">{exp.title}</CardTitle>
+                        <CardTitle className="text-xl mb-1">{exp.role}</CardTitle>
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-muted-foreground">
                           <span className="font-medium text-primary">{exp.company}</span>
                           <span className="hidden sm:block">•</span>
-                          <span>{exp.period}</span>
+                          <span>{exp.duration}</span>
                         </div>
                       </div>
                     </div>

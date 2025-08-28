@@ -1,25 +1,31 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Code, Database, Brain } from 'lucide-react';
+import { Code, Database, Brain, ExternalLink } from 'lucide-react';
+import { useSupabaseData } from '@/hooks/useSupabaseData';
+import { Project } from '@/types/database';
 
 const ProjectsSection = () => {
-  const projects = [
-    {
-      title: "Banknote Authentication Dataset",
-      description: "Machine learning project implementing K-Means Clustering for banknote authentication, demonstrating unsupervised learning techniques for fraud detection.",
-      technologies: ["Python", "Machine Learning", "K-Means", "Data Analysis"],
-      icon: Brain,
-      type: "Research"
-    },
-    {
-      title: "Learning Management System",
-      description: "Comprehensive web-based LMS developed as final year project, featuring student enrollment, course management, and assessment tools.",
-      technologies: ["Web Development", "Database Design", "Full Stack"],
-      icon: Code,
-      type: "Final Year Project"
-    }
-  ];
+  const { data: projects, loading } = useSupabaseData('projects');
+
+  if (loading) {
+    return (
+      <section id="projects" className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="animate-pulse">
+              <div className="h-12 bg-muted rounded w-64 mx-auto mb-12"></div>
+              <div className="grid md:grid-cols-2 gap-6">
+                {[1, 2].map((i) => (
+                  <div key={i} className="h-48 bg-muted rounded"></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const researchInterests = [
     "Artificial Intelligence",
@@ -47,55 +53,48 @@ const ProjectsSection = () => {
 
           {/* Projects */}
           <div className="grid md:grid-cols-2 gap-6 mb-12">
-            {projects.map((project, index) => {
-              const IconComponent = project.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="h-full card-glow hover:border-primary/50 transition-all duration-300">
-                    <CardHeader>
-                      <div className="flex items-start gap-4">
-                        <motion.div 
-                          className="p-2 rounded-lg bg-primary/10 text-primary"
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          <IconComponent className="h-6 w-6" />
-                        </motion.div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <CardTitle className="text-xl">{project.title}</CardTitle>
-                            <Badge variant="secondary" className="text-xs">
-                              {project.type}
-                            </Badge>
-                          </div>
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2, duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <Card className="h-full card-glow hover:border-primary/50 transition-all duration-300">
+                  <CardHeader>
+                    <div className="flex items-start gap-4">
+                      <motion.div 
+                        className="p-2 rounded-lg bg-primary/10 text-primary"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <Code className="h-6 w-6" />
+                      </motion.div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <CardTitle className="text-xl">{project.title}</CardTitle>
+                          {project.link && (
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:text-primary/80"
+                            >
+                              <ExternalLink className="h-4 w-4" />
+                            </a>
+                          )}
                         </div>
                       </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground mb-4 leading-relaxed">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, techIndex) => (
-                          <Badge 
-                            key={techIndex} 
-                            variant="outline" 
-                            className="border-primary/50 text-primary"
-                          >
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {project.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
 
           {/* Research Interests */}

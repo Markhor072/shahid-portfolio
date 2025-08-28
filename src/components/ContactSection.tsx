@@ -2,45 +2,65 @@ import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, MessageCircle, Github, Linkedin, MapPin } from 'lucide-react';
+import { useSupabaseData } from '@/hooks/useSupabaseData';
 
 const ContactSection = () => {
-  const contactMethods = [
+  const { data: contacts, loading } = useSupabaseData('contact');
+  const contact = contacts[0]; // Assuming single contact record
+
+  if (loading) {
+    return (
+      <section id="contact" className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="animate-pulse">
+              <div className="h-12 bg-muted rounded w-64 mx-auto mb-12"></div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="h-32 bg-muted rounded"></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!contact) return null;
+
+  const contactInfo = [
     {
       icon: Mail,
       label: "Email",
-      value: "shahidhassankhokhar@gmail.com",
-      href: "mailto:shahidhassankhokhar@gmail.com",
-      color: "text-primary"
+      value: contact.email,
+      link: `mailto:${contact.email}`
     },
     {
       icon: Phone,
-      label: "WhatsApp", 
-      value: "+92 3310212514",
-      href: "https://wa.me/923310212514",
-      color: "text-green-500"
+      label: "WhatsApp",
+      value: contact.whatsapp,
+      link: `https://wa.me/${contact.whatsapp?.replace(/\D/g, '')}`
     },
     {
       icon: MessageCircle,
       label: "Telegram",
-      value: "@markhor072",
-      href: "https://t.me/markhor072",
-      color: "text-blue-500"
+      value: contact.telegram,
+      link: `https://t.me/${contact.telegram?.replace('@', '')}`
     },
     {
       icon: Github,
       label: "GitHub",
-      value: "Markhor072",
-      href: "https://github.com/Markhor072",
-      color: "text-foreground"
+      value: contact.github,
+      link: contact.github
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      value: "malik-shahid-hassan-khokhar",
-      href: "https://www.linkedin.com/in/malik-shahid-hassan-khokhar-44a865272/",
-      color: "text-blue-600"
+      value: "LinkedIn Profile",
+      link: contact.linkedin
     }
-  ];
+  ].filter(item => item.value); // Filter out empty values
 
   return (
     <section id="contact" className="py-20 bg-card">
@@ -60,7 +80,7 @@ const ContactSection = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {contactMethods.map((method, index) => {
+            {contactInfo.map((method, index) => {
               const IconComponent = method.icon;
               return (
                 <motion.div
@@ -74,7 +94,7 @@ const ContactSection = () => {
                   <Card className="h-full card-glow hover:border-primary/50 transition-all duration-300">
                     <CardContent className="p-6 text-center">
                       <motion.div 
-                        className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted/50 mb-4 ${method.color}`}
+                        className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted/50 mb-4 text-primary`}
                         whileHover={{ scale: 1.1 }}
                       >
                         <IconComponent className="h-6 w-6" />
@@ -92,7 +112,7 @@ const ContactSection = () => {
                         asChild
                       >
                         <a 
-                          href={method.href} 
+                          href={method.link} 
                           target="_blank" 
                           rel="noopener noreferrer"
                         >
@@ -129,7 +149,7 @@ const ContactSection = () => {
                     className="bg-primary hover:bg-primary/90 neon-glow"
                     asChild
                   >
-                    <a href="mailto:shahidhassankhokhar@gmail.com">
+                    <a href={contact.email ? `mailto:${contact.email}` : 'mailto:shahidhassankhokhar@gmail.com'}>
                       <Mail className="mr-2 h-5 w-5" />
                       Send Email
                     </a>

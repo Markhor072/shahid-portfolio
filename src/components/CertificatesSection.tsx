@@ -1,54 +1,31 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Award, Brain, Code, Database, Users, Smartphone } from 'lucide-react';
+import { Award, ExternalLink } from 'lucide-react';
+import { useSupabaseData } from '@/hooks/useSupabaseData';
+import { Certificate } from '@/types/database';
 
 const CertificatesSection = () => {
-  const certificates = [
-    {
-      name: "Intro to AI",
-      provider: "IBM",
-      icon: Brain,
-      category: "AI/ML"
-    },
-    {
-      name: "Supervised ML",
-      provider: "Stanford & DeepLearning.AI",
-      icon: Database,
-      category: "AI/ML"
-    },
-    {
-      name: "Data Science Foundations",
-      provider: "University of London",
-      icon: Database,
-      category: "Data Science"
-    },
-    {
-      name: "Technical Support Fundamentals",
-      provider: "Google",
-      icon: Code,
-      category: "Technical"
-    },
-    {
-      name: "AI For Everyone",
-      provider: "DeepLearning.AI",
-      icon: Brain,
-      category: "AI/ML"
-    },
-    {
-      name: "Social Media Marketing",
-      provider: "Pakistan Youth Force",
-      icon: Smartphone,
-      category: "Marketing"
-    }
-  ];
+  const { data: certificates, loading } = useSupabaseData('certificates');
 
-  const categoryColors = {
-    "AI/ML": "border-primary text-primary",
-    "Data Science": "border-accent text-accent", 
-    "Technical": "border-blue-500 text-blue-500",
-    "Marketing": "border-green-500 text-green-500"
-  };
+  if (loading) {
+    return (
+      <section id="certificates" className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="animate-pulse">
+              <div className="h-12 bg-muted rounded w-64 mx-auto mb-12"></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="h-40 bg-muted rounded"></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="certificates" className="py-20 bg-card">
@@ -66,40 +43,46 @@ const CertificatesSection = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {certificates.map((cert, index) => {
-              const IconComponent = cert.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -5 }}
-                >
-                  <Card className="h-full card-glow hover:border-primary/50 transition-all duration-300">
-                    <CardContent className="p-6 text-center">
-                      <motion.div 
-                        className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                      >
-                        <IconComponent className="h-8 w-8" />
-                      </motion.div>
-                      
-                      <h3 className="font-semibold text-lg mb-2">{cert.name}</h3>
-                      <p className="text-muted-foreground text-sm mb-3">{cert.provider}</p>
-                      
-                      <Badge 
-                        variant="outline" 
-                        className={`text-xs ${categoryColors[cert.category as keyof typeof categoryColors]}`}
-                      >
-                        {cert.category}
-                      </Badge>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+            {certificates.map((cert, index) => (
+              <motion.div
+                key={cert.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5 }}
+              >
+                <Card className="h-full card-glow hover:border-primary/50 transition-all duration-300">
+                  <CardContent className="p-6 text-center">
+                    <motion.div 
+                      className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                    >
+                      <Award className="h-8 w-8" />
+                    </motion.div>
+                    
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <h3 className="font-semibold text-lg">{cert.title}</h3>
+                      {cert.url && (
+                        <a
+                          href={cert.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:text-primary/80"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
+                    <p className="text-muted-foreground text-sm mb-3">{cert.issuer}</p>
+                    
+                    <Badge variant="outline" className="text-xs border-primary text-primary">
+                      {cert.year}
+                    </Badge>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
