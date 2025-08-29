@@ -77,10 +77,15 @@ The React hooks (`src/hooks/useSupabase.ts`) will fetch data from these tables. 
 
 ## 📁 Project Structure
 src/
+
 ├── components/ # Reusable React components
+
 ├── hooks/ # Custom React hooks (e.g., useSupabase for data fetching)
+
 ├── lib/ # Utility libraries (e.g., supabaseClient configuration)
+
 ├── App.tsx # Main application component
+
 └── main.tsx # Application entry point
 
 ## 🚀 Deployment
