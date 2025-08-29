@@ -76,3 +76,38 @@ This portfolio uses Supabase tables to store dynamic content. To set up your own
 The React hooks (`src/hooks/useSupabase.ts`) will fetch data from these tables. Ensure your Supabase project policies allow for public read access (select) on these tables if you want the content to be publicly visible.
 
 ## 📁 Project Structure
+src/
+├── components/ # Reusable React components
+├── hooks/ # Custom React hooks (e.g., useSupabase for data fetching)
+├── lib/ # Utility libraries (e.g., supabaseClient configuration)
+├── App.tsx # Main application component
+└── main.tsx # Application entry point
+
+## 🚀 Deployment
+
+The site is configured for easy deployment on **Vercel**:
+
+1.  Push your code to a GitHub repository.
+2.  Connect your repository to [Vercel](https://vercel.com/).
+3.  Add your environment variables (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) in the Vercel dashboard.
+4.  Deploy! Vercel will automatically deploy your site on every push to the `main` branch.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Markhor072/shahid-portfolio/issues).
+
+If you want to use this as a template for your own portfolio, please give credit by linking back to this repository. ❤️
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 📬 Contact
+
+Shahid Hassan - [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/markhor072) - [@Markhor072](https://github.com/Markhor072)
+
+Portfolio Link: [https://shahidhassan.vercel.app/](https://shahidhassan.vercel.app/)
+
+---
+
+⭐ **If you like this project, don't forget to give it a star on GitHub!**
