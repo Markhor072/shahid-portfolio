@@ -116,6 +116,6 @@ I'm always open to discussing new projects, creative ideas, or opportunities to 
 
 🐙 GitHub: @Markhor072
 
-📧 Email: shahidhassan.developer[at]gmail.com <shahidhassankhokhar@gmail.com>
+📧 Email: <shahidhassankhokhar@gmail.com>
 
 ⭐ **If you like this project, don't forget to give it a star on GitHub!**
