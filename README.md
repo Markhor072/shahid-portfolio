@@ -8,7 +8,7 @@ A modern, high-performance portfolio website built with **React**, **TypeScript*
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
-![Portfolio Screenshot](https://via.placeholder.com/800x400/3b82f6/ffffff?text=Shahid+Hassan+Portfolio) 
+![Portfolio Screenshot](image.png) 
 *<!-- Replace the above placeholder with an actual screenshot of your site -->*
 
 ## 🚀 Live Demo
