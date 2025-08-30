@@ -107,12 +107,15 @@ If you want to use this as a template for your own portfolio, please give credit
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 📬 Contact
+## 📬 Contact & Connect
+I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
 
-Shahid Hassan - [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/markhor072) - [@Markhor072](https://github.com/Markhor072)
+🌐 Portfolio: https://shahidhassan.vercel.app
 
-Portfolio Link: [https://shahidhassan.vercel.app/](https://shahidhassan.vercel.app/)
+💼 LinkedIn: Connect with me
 
----
+🐙 GitHub: @Markhor072
+
+📧 Email: shahidhassan.developer[at]gmail.com <shahidhassankhokhar@gmail.com>
 
 ⭐ **If you like this project, don't forget to give it a star on GitHub!**
